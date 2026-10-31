@@ -161,12 +161,11 @@ def build_payload(row: dict, gathered: dict) -> tuple[dict, dict]:
 
 def enrich_lead(lead_id: str, send: bool = True) -> dict:
     started = time.monotonic()
+    row = store.get_lead(lead_id)
+    if not row:  # nothing to track either: enrichments.lead_id must reference an existing lead
+        return {"lead_id": lead_id, "status": "failed", "error": "lead not found in Supabase"}
     if not store.claim(lead_id):
         return {"lead_id": lead_id, "status": "skipped", "reason": "already running or sent"}
-    row = store.get_lead(lead_id)
-    if not row:
-        store.finish(lead_id, status="failed", error="lead not found in Supabase")
-        return {"lead_id": lead_id, "status": "failed", "error": "lead not found"}
 
     try:
         gathered = gather(row)

@@ -92,7 +92,9 @@ sends exactly this shape, plus a few fields Hermes may ignore safely:
 - `lead.call_consent` (bool) and `lead.timezone` (the browser's). Without call consent `lead.phone` is `null`,
   so Hermes can never decide `call` for that person.
 - `crm.lifecycle_stage` (HubSpot label) and `crm.do_not_contact` (true for "Kein Vertriebskontakt").
-  Hermes's code doesn't read these yet: a `do_not_contact` company can still come out as `call`.
+  Since 2026-10-31 Hermes's code turns `do_not_contact` into `handoff`, so such a company is never called.
+- A `call` decision makes Hermes ask KugelAudio to have Kai (agent gtm-hack) dial `lead.phone`, with the
+  call brief as client context; the call id lands in the result's `call` field and in Slack.
 - `person`: the signer's title and LinkedIn URL when AI Ark or LinkedIn found them at this company.
 - Evidence objects next to optional facts: `firmographics.evidence[]` (`field`, `url`, `quote`),
   `voice.call_volume_evidence`, `voice.telephony_evidence`, `voice.eu_evidence`,

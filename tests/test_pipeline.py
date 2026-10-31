@@ -39,6 +39,14 @@ def test_claim_twice_skips(monkeypatch, recorder):
     assert recorder["sent"] == [] and recorder["finish"] == []
 
 
+def test_unknown_lead_fails_without_claiming(monkeypatch, recorder):
+    monkeypatch.setattr(pipeline.store, "get_lead", lambda lead_id: None)
+    monkeypatch.setattr(pipeline.store, "claim", lambda lead_id: pytest.fail("no enrichments row for a missing lead"))
+    result = pipeline.enrich_lead("does_not_exist")
+    assert result["status"] == "failed"
+    assert recorder["finish"] == [] and recorder["sent"] == []
+
+
 def test_hubspot_error_is_not_sent(monkeypatch, recorder):
     monkeypatch.setattr(pipeline.store, "claim", lambda lead_id: True)
 

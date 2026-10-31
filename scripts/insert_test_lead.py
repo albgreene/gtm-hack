@@ -2,10 +2,11 @@
 """Insert a fake sign-up into Supabase leads, as the sign-up form would. Prints the new lead id.
 
     .venv/bin/python scripts/insert_test_lead.py --email test.lead@telli.com
-    .venv/bin/python scripts/insert_test_lead.py --email someone@gmail.com --no-call-consent
+    .venv/bin/python scripts/insert_test_lead.py --email you@company.com --call-me +4917612345678
 
-The person is fake (Test Lead, +491500000000). If the Supabase trigger is configured, the insert starts the
-enrichment on Vercel by itself.
+The person is fake (Test Lead) and gives no call consent, so the fake number +491500000000 is never passed
+on and nobody is dialed. --call-me puts your own number in with call consent: if Hermes decides "call",
+Kai rings that number. The insert starts the enrichment on Vercel by itself (Supabase trigger).
 """
 
 import argparse
@@ -25,9 +26,8 @@ def main() -> None:
     parser.add_argument("--email", required=True)
     parser.add_argument("--first", default="Test")
     parser.add_argument("--last", default="Lead")
-    parser.add_argument("--phone", default="+491500000000")
+    parser.add_argument("--call-me", metavar="PHONE", help="your own number, E.164; gives call consent")
     parser.add_argument("--country", default="DE")
-    parser.add_argument("--no-call-consent", action="store_true")
     args = parser.parse_args()
     load_env(ROOT / ".env.local")
 
@@ -36,10 +36,11 @@ def main() -> None:
 
     lead_id = "test_" + os.urandom(6).hex()
     row = {"id": lead_id, "submitted_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-           "first_name": args.first, "last_name": args.last, "email": args.email.lower(), "phone": args.phone,
+           "first_name": args.first, "last_name": args.last, "email": args.email.lower(),
+           "phone": args.call_me or "+491500000000",
            "country": args.country, "locale": "de-DE", "timezone": "Europe/Berlin",
            "tos": {"accepted": True, "version": "test", "text": "test lead"},
-           "call_consent": {"given": not args.no_call_consent, "version": "test", "text": "test lead"},
+           "call_consent": {"given": bool(args.call_me), "version": "test", "text": "test lead"},
            "data_notice": "test lead", "user_agent": "scripts/insert_test_lead.py", "ip": None}
     net.post_json(f"{env('SUPABASE_URL').rstrip('/')}/rest/v1/leads", row,
                   {"apikey": env("SUPABASE_SECRET_KEY"), "Prefer": "return=minimal"})

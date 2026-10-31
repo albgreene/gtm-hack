@@ -123,8 +123,9 @@ leads INSERT ──(Supabase database webhook)──▶ POST /api/enrich (Vercel
   `finished_at`, `raw` (each source's trimmed result), `payload` (exactly what went to Hermes),
   `hermes_status`, `hermes_response`, `error`. A lead already `running` or `sent` isn't started again.
 - **LLM**: Claude, called like the qualifier does: the official `anthropic` SDK with OpenRouter as
-  `base_url` and `OPENROUTER_API_KEY`. Sonnet-class should be enough to extract facts. The builder
-  confirms the model id and the structured-output approach with the `claude-api` skill.
+  `base_url` and `OPENROUTER_API_KEY`. As built: `anthropic/claude-opus-5.5` (the `claude-api` skill's
+  default, and the same model as the qualifier) at effort `medium`; a whole lead takes about 60–70 s.
+  Override with `ENRICH_MODEL` / `ENRICH_EFFORT`.
 - **Call consent**: if `call_consent.given` is false, the payload's `lead.phone` is `null` and
   `lead.call_consent` is `false`. Hermes then can't decide `call` (its code requires a phone number), with no
   change on the Hermes side. If consent was given, the phone goes through and `lead.call_consent` is `true`.
