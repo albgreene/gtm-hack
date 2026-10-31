@@ -3,465 +3,450 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>KugelAudio — AI Phone Agents that Turn Calls into Pipeline</title>
-  <meta name="description" content="KugelAudio GmbH builds European AI voice agents that answer every business call, qualify leads in real time and report every KPI. GDPR-compliant, hosted in the EU." />
-  <meta property="og:title" content="KugelAudio — AI Phone Agents for B2B" />
-  <meta property="og:description" content="Every call answered. Every lead counted. European AI voice agents with built-in lead & KPI analytics." />
+  <title>KugelAudio — Voice AI models and agents, made in Europe</title>
+  <meta name="description" content="Foundational voice AI for agents that answer your phone line. Kugel Ear 1 understands your callers, Kugel 3.5 answers them in a natural voice, Clarity 1 hears only the caller. Developed and hosted in Europe, fully GDPR compliant." />
+  <meta property="og:title" content="KugelAudio — Voice AI made in Europe" />
+  <meta property="og:description" content="Speech-to-text, text-to-speech and clean audio for voice agents. 39 languages, EU-hosted, backed by Y Combinator." />
   <meta property="og:image" content="assets/logos/og-image.png" />
-  <meta name="theme-color" content="#0b0b09" />
+  <meta name="theme-color" content="#1f1c1b" />
   <link rel="icon" href="assets/logos/favicon.ico" sizes="any" />
   <link rel="apple-touch-icon" href="assets/logos/apple-icon.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&display=swap" rel="stylesheet" />
+  <link rel="preload" as="image" href="assets/img/hero.jpg" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
   <!-- ============ NAV ============ -->
-  <header class="nav" id="nav">
+  <header class="nav nav--overlay" id="nav">
     <div class="nav__inner container">
       <a href="#top" class="nav__brand" aria-label="KugelAudio home">
         <img class="logo logo--dark" src="assets/logos/logo-banner-transparent-darkmode.png" alt="KugelAudio" width="2160" height="693" />
         <img class="logo logo--light" src="assets/logos/logo-banner-transparent.png" alt="KugelAudio" width="2160" height="693" />
       </a>
       <nav class="nav__links" aria-label="Main">
-        <a href="#product">Product</a>
-        <a href="#how">How it works</a>
-        <a href="#analytics">Analytics</a>
-        <a href="#roi">ROI</a>
+        <a href="#models">Models</a>
+        <a href="#platform">Agents</a>
+        <a href="#benchmarks">Benchmarks</a>
         <a href="#pricing">Pricing</a>
-        <a href="#faq">FAQ</a>
+        <a href="#security">Sovereignty</a>
+        <a href="https://docs.kugelaudio.com/">Docs</a>
       </nav>
       <div class="nav__cta">
-        <a href="#" class="link-quiet">Log in</a>
-        <a href="#demo" class="btn btn--primary btn--sm">Book a demo <span class="arrow">→</span></a>
+        <span class="nav__sep" aria-hidden="true"></span>
+        <a href="https://www.kugelaudio.com/en/signin" class="nav__login">Log in</a>
+        <a href="signup.html" class="btn btn--light btn--sm">Sign up</a>
       </div>
       <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
     </div>
     <div class="nav__mobile" id="mobileMenu">
-      <a href="#product">Product</a><a href="#how">How it works</a><a href="#analytics">Analytics</a>
-      <a href="#roi">ROI</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
-      <a href="#demo" class="btn btn--primary">Book a demo →</a>
+      <a href="#models">Models</a><a href="#platform">Agents</a><a href="#benchmarks">Benchmarks</a>
+      <a href="#pricing">Pricing</a><a href="#security">Sovereignty</a><a href="https://docs.kugelaudio.com/">Docs</a>
+      <a href="signup.html" class="btn btn--accent">Sign up</a>
     </div>
   </header>
 
   <main id="top">
     <!-- ============ HERO ============ -->
     <section class="hero">
-      <canvas id="heroWaves" class="hero__waves" aria-hidden="true"></canvas>
-      <div class="hero__glow" aria-hidden="true"></div>
-      <div class="container hero__grid">
+      <div class="hero__media" aria-hidden="true">
+        <img src="assets/img/hero.jpg" alt="" width="2048" height="1152" fetchpriority="high" />
+      </div>
+      <div class="hero__shade" aria-hidden="true"></div>
+
+      <div class="container hero__inner">
         <div class="hero__copy">
-          <a href="#analytics" class="pill reveal">
-            <span class="pill__dot"></span> New: Live KPI dashboards for every call
-            <span class="pill__arrow">→</span>
-          </a>
-          <h1 class="hero__title reveal">
-            Every call answered.<br />
-            <em>Every lead counted.</em>
-          </h1>
-          <p class="hero__lead reveal">
-            KugelAudio deploys AI phone agents that pick up 24/7, qualify prospects in natural conversation and push every lead, KPI and insight straight into your dashboard and CRM. Built and hosted in Europe.
-          </p>
+          <h1 class="hero__title reveal">Voice AI models and agents, made in Europe.</h1>
+          <p class="hero__lead reveal">Kugel Ear 1 understands your callers. Kugel 3.5 answers them in a natural voice. Developed and hosted in Europe, fully GDPR compliant.</p>
           <div class="hero__actions reveal">
-            <a href="#demo" class="btn btn--primary btn--lg">Book a live demo <span class="arrow">→</span></a>
-            <button class="btn btn--ghost btn--lg" id="listenBtn" type="button">
-              <span class="play"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M7 4v16l13-8z" fill="currentColor"/></svg></span>
-              Watch a call
-            </button>
+            <a href="signup.html" class="btn btn--accent">Get started free</a>
+            <a href="#pricing" class="btn btn--glass">View pricing</a>
           </div>
-          <ul class="hero__trust reveal">
-            <li><img src="assets/logos/gdpr-badge.png" alt="" width="22" height="22" /> GDPR-compliant</li>
-            <li><span class="flag" aria-hidden="true"></span> Made in Germany</li>
-            <li><span class="ico">◎</span> 39 languages</li>
-          </ul>
+          <p class="yc yc--light reveal"><img src="assets/logos/yc.svg" alt="" width="18" height="18" /><span>Backed by <b>Y Combinator</b></span></p>
         </div>
 
-        <!-- Live call widget -->
-        <div class="callcard reveal" id="callcard" aria-label="Simulated live call">
-          <div class="callcard__head">
-            <div class="callcard__who">
-              <span class="live"><span></span>LIVE</span>
-              <div>
-                <strong>Inbound · Nordlicht Solar</strong>
-                <small>+49 40 •••• 2318 · <span id="callTimer">00:00</span></small>
+        <div class="chat" id="chat" aria-label="Example call: Kugel Ear 1 flags an uncertain name so the agent asks once" aria-live="off">
+          <div class="chat__stack" id="chatStack"></div>
+          <div class="chat__done" id="chatDone">
+            <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Final transcript in 72 ms
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WORKS WITH ============ -->
+    <section class="logos" aria-label="Works with">
+      <div class="logos__track">
+        <span>LiveKit Agents</span><span>Pipecat</span><span>Vapi</span><span>Cognigy</span><span>MCP for Claude &amp; Cursor</span>
+        <span>Python SDK</span><span>TypeScript SDK</span><span>REST</span><span>WebSocket streaming</span>
+        <span aria-hidden="true">LiveKit Agents</span><span aria-hidden="true">Pipecat</span><span aria-hidden="true">Vapi</span><span aria-hidden="true">Cognigy</span><span aria-hidden="true">MCP for Claude &amp; Cursor</span>
+        <span aria-hidden="true">Python SDK</span><span aria-hidden="true">TypeScript SDK</span><span aria-hidden="true">REST</span><span aria-hidden="true">WebSocket streaming</span>
+      </div>
+    </section>
+
+    <!-- ============ THE MODELS ============ -->
+    <section class="section" id="models">
+      <div class="container">
+        <header class="head reveal">
+          <span class="eyebrow">The models</span>
+          <h2>Foundational voice models, trained for real phone calls.</h2>
+        </header>
+
+        <div class="diff">
+          <article class="diff__card reveal">
+            <div class="diff__art diff__art--ember">
+              <div class="mini mini--ear">
+                <div class="mini__head"><img src="assets/logos/mark.png" alt="" width="20" height="12" /> kugel-ear-1 · transcript</div>
+                <p class="mini__line">Hi, this is <mark>Viktor</mark> Brandt.</p>
+                <div class="alts" aria-label="Alternative spellings Kugel Ear 1 heard">
+                  <div><span>Viktor</span><i style="--w:55%"></i><b>55%</b></div>
+                  <div><span>Victor</span><i style="--w:31%"></i><b>31%</b></div>
+                  <div><span>Wiktor</span><i style="--w:14%"></i><b>14%</b></div>
+                </div>
               </div>
             </div>
-            <div class="callcard__agent">
-              <img src="assets/logos/logo-square-transparent-darkmode.png" alt="" width="28" height="28" />
-              Agent “Lena”
-            </div>
-          </div>
+            <h3>1. Kugel Ear 1 tells your bot when it's unsure.</h3>
+            <p>Speech-to-text for voice agents. It flags the words it isn't sure of — like a caller's name — and sends the spellings it heard, so your bot asks once instead of guessing.</p>
+          </article>
 
-          <div class="callcard__wave" id="callWave" aria-hidden="true"></div>
-
-          <div class="callcard__body">
-            <div class="transcript" id="transcript"></div>
-            <aside class="leadpanel">
-              <div class="score">
-                <svg viewBox="0 0 80 80" class="score__ring">
-                  <circle cx="40" cy="40" r="34" class="score__track" />
-                  <circle cx="40" cy="40" r="34" class="score__bar" id="scoreBar" />
-                </svg>
-                <div class="score__val"><span id="scoreVal">0</span><small>lead score</small></div>
+          <article class="diff__card reveal">
+            <div class="diff__art diff__art--mist">
+              <div class="mini mini--progress">
+                <code class="mini__code">GB29 NWBK 6016 1331 9268 19</code>
+                <span><svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor"/><path d="M5 8.2l2 2 4-4" fill="none" stroke="currentColor" stroke-linecap="round"/></svg> Numbers read exactly · <b data-count="97.1" data-decimals="1" data-suffix="%">0</b></span>
+                <div class="mini__bar"><i></i></div>
               </div>
-              <dl class="fields" id="fields">
-                <div data-k="name"><dt>Contact</dt><dd>—</dd></div>
-                <div data-k="company"><dt>Company</dt><dd>—</dd></div>
-                <div data-k="project"><dt>Project</dt><dd>—</dd></div>
-                <div data-k="budget"><dt>Budget</dt><dd>—</dd></div>
-                <div data-k="timeline"><dt>Timeline</dt><dd>—</dd></div>
-              </dl>
-            </aside>
+            </div>
+            <h3>2. Kugel 3.5 gets the details callers notice.</h3>
+            <p>Text-to-speech that says one-word replies cleanly, keeps every voice in its own accent and reads IBANs, codes and phone numbers in the groups you wrote them.</p>
+          </article>
+
+          <article class="diff__card reveal">
+            <div class="diff__art diff__art--night">
+              <div class="orb" aria-hidden="true"></div>
+              <span class="diff__chip">Clarity on · caller only</span>
+            </div>
+            <h3>3. Clarity 1 hears the caller, not the room.</h3>
+            <p>Removes background noise in real time and, with a 2–8 second voice sample, every voice but the caller's — so chatter in a café never ends up in the transcript.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ AGENTS / PLATFORM ============ -->
+    <section class="section section--tight" id="platform">
+      <div class="container">
+        <header class="head head--split reveal">
+          <div>
+            <span class="eyebrow">Voice agents</span>
+            <h2>Everything a voice agent needs to hear, think and speak.</h2>
           </div>
-          <div class="toast" id="toast">
-            <span class="toast__check">✓</span>
-            <div><strong>Meeting booked · Tue 10:00</strong><small>Lead synced to CRM · summary sent to sales</small></div>
+          <p>Use the models as building blocks in the voice stack you already run — or start from a complete voice agent. Same SDK and API whether you run in our EU cloud or on your own hardware.</p>
+        </header>
+
+        <div class="stage reveal">
+          <div class="channels">
+            <span class="channels__label">Works with</span>
+            <span><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path d="M3 10h1M6 7v6M9 4v12M12 6v8M15 8v4M18 10h-1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>LiveKit</span>
+            <span><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Pipecat</span>
+            <span><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path d="M5 3.5h3l1.5 4-2 1.3a9 9 0 004.7 4.7l1.3-2 4 1.5v3A1.5 1.5 0 0116 17.5 13.5 13.5 0 012.5 4 1.5 1.5 0 014 2.5z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Vapi</span>
+            <span><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M3 8h14" stroke="currentColor" stroke-width="1.2"/></svg>Cognigy</span>
+            <span><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path d="M7 6l-4 4 4 4M13 6l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>MCP</span>
+          </div>
+          <div class="stage__wires" aria-hidden="true"><i></i><i></i><i></i></div>
+
+          <div class="modules">
+            <article class="module">
+              <span class="module__id">kugel-ear-1 · speech to text</span>
+              <h3>Hear</h3>
+              <ul><li>Flags unsure words with alternatives</li><li>Waits out mid-sentence pauses</li><li>72 ms to final transcript (median)</li></ul>
+              <div class="flow" aria-hidden="true">
+                <span><i></i>Caller speaks</span>
+                <span><i></i>Unsure word flagged</span>
+                <span><i></i>Turn ends on time</span>
+              </div>
+            </article>
+            <article class="module">
+              <span class="module__id">kugel-3.5 · text to speech</span>
+              <h3>Speak</h3>
+              <ul><li>39 languages, accents &amp; dialects</li><li>Clone a voice in under a minute</li><li>IPA dictionaries, break tokens, timestamps</li></ul>
+              <div class="chips" aria-hidden="true">
+                <span>Noah</span><span>Olivia</span><span>Emma Gallagher</span><span>Samantha</span><span>Gustav</span><span class="chips__you">+ your voice</span>
+              </div>
+            </article>
+            <article class="module">
+              <span class="module__id">clarity-1 · clean audio</span>
+              <h3>Listen</h3>
+              <ul><li>Removes background noise</li><li>Isolates the caller from a voice sample</li><li>240 ms streaming latency</li></ul>
+              <svg class="spark" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M0 30 L6 18 L10 41 L15 12 L20 47 L24 22 L29 38 L33 15 L38 44 L43 25 L47 36 L52 20 L57 40 L62 28 L66 33 L71 26 L76 34 L80 29 L86 31 L92 30" fill="none" stroke="#c9c1b6" stroke-width="1.4" stroke-linejoin="round"/>
+                <path d="M92 30 C102 30 104 14 112 14 S122 46 130 46 140 16 148 16 158 42 166 42 176 22 184 22 194 30 200 30" fill="none" stroke="#ff5a1f" stroke-width="1.8"/>
+              </svg>
+            </article>
+          </div>
+          <a class="stage__link" href="https://www.kugelaudio.com/en/integrations">See a complete voice agent <span aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="strip reveal">
+          <span class="strip__label">Get started</span>
+          <ol class="strip__steps">
+            <li><span class="strip__k">Step 01</span> Create an account<p>Every new account starts with €5 of credit — at least 70 minutes of audio. No credit card, no expiry.</p></li>
+            <li><span class="strip__k">Step 02</span> Add three lines of code<p>Python, TypeScript or cURL, with official plugins for LiveKit and Pipecat.</p></li>
+            <li><span class="strip__k">Step 03</span> Go live in Europe<p>EU Sovereign Cloud is included on every plan. On-premise is available on Enterprise.</p></li>
+          </ol>
+          <div class="strip__stats">
+            <div class="strip__big"><b data-count="91" data-suffix=" ms">0</b><span><i></i>median time to first audio · Kugel 3</span></div>
+            <div class="strip__small">
+              <div><b data-count="72" data-suffix=" ms">0</b><span>Final transcript</span></div>
+              <div><b data-count="39">0</b><span>Languages &amp; dialects</span></div>
+              <div><b>&lt;1 min</b><span>To clone a voice</span></div>
+            </div>
           </div>
         </div>
       </div>
-
-      <!-- stat ribbon -->
-      <div class="container">
-        <div class="ribbon reveal">
-          <div><b data-count="100" data-suffix="%">0</b><span>of calls answered, day or night</span></div>
-          <div><b data-count="300" data-prefix="&lt;" data-suffix="ms">0</b><span>response latency</span></div>
-          <div><b data-count="39">0</b><span>languages &amp; dialects</span></div>
-          <div><b data-count="3.4" data-decimals="1" data-suffix="×">0</b><span>more qualified leads*</span></div>
-        </div>
-      </div>
     </section>
 
-    <!-- ============ MARQUEE ============ -->
-    <section class="marquee" aria-label="Industries">
-      <div class="marquee__track">
-        <span>Real estate</span><i>◆</i><span>Automotive dealers</span><i>◆</i><span>Solar &amp; energy</span><i>◆</i>
-        <span>Healthcare practices</span><i>◆</i><span>B2B SaaS</span><i>◆</i><span>Insurance</span><i>◆</i>
-        <span>Recruiting</span><i>◆</i><span>Hospitality</span><i>◆</i><span>Field services</span><i>◆</i>
-        <span>Real estate</span><i>◆</i><span>Automotive dealers</span><i>◆</i><span>Solar &amp; energy</span><i>◆</i>
-        <span>Healthcare practices</span><i>◆</i><span>B2B SaaS</span><i>◆</i><span>Insurance</span><i>◆</i>
-        <span>Recruiting</span><i>◆</i><span>Hospitality</span><i>◆</i><span>Field services</span><i>◆</i>
-      </div>
-    </section>
-
-    <!-- ============ PRODUCT / BENTO ============ -->
-    <section class="section" id="product">
+    <!-- ============ BENCHMARKS ============ -->
+    <section class="section" id="benchmarks">
       <div class="container">
-        <header class="section__head reveal">
-          <span class="eyebrow">Product</span>
-          <h2>One agent. Every call.<br /><em>Measurable from the first ring.</em></h2>
-          <p>Your AI receptionist, SDR and analyst in one — speaking with your brand voice and reporting like your best ops manager.</p>
+        <header class="head head--split reveal">
+          <div>
+            <span class="eyebrow">Benchmarks</span>
+            <h2>Measured against the models you already know.</h2>
+          </div>
+          <p>Every model got the same audio or text and the same judges. The orange bar is ours.</p>
         </header>
 
-        <div class="bento">
-          <article class="tile tile--wide reveal">
-            <div class="tile__text">
-              <span class="tile__tag">Inbound</span>
-              <h3>Never miss a call again</h3>
-              <p>Lena answers in under a second, handles peaks without hold music and routes urgent cases to a human — with full context.</p>
-            </div>
-            <div class="viz-calls" aria-hidden="true">
-              <div class="vc-row"><span class="vc-dot ok"></span>09:02 · Appointment request<em>handled</em></div>
-              <div class="vc-row"><span class="vc-dot ok"></span>09:04 · Pricing question<em>handled</em></div>
-              <div class="vc-row"><span class="vc-dot hot"></span>09:05 · Hot lead — 120k budget<em>→ sales</em></div>
-              <div class="vc-row"><span class="vc-dot ok"></span>09:07 · Order status<em>handled</em></div>
-              <div class="vc-row"><span class="vc-dot ok"></span>02:13 · After-hours inquiry<em>handled</em></div>
-            </div>
-          </article>
-
-          <article class="tile reveal">
-            <span class="tile__tag">Qualification</span>
-            <h3>BANT on autopilot</h3>
-            <p>Custom scoring rules extract budget, authority, need and timeline — mid-conversation.</p>
-            <div class="bant" aria-hidden="true">
-              <span style="--w:92%">Budget</span><span style="--w:78%">Authority</span><span style="--w:96%">Need</span><span style="--w:64%">Timeline</span>
-            </div>
-          </article>
-
-          <article class="tile tile--dark reveal">
-            <span class="tile__tag">Outbound</span>
-            <h3>Follow up at scale</h3>
-            <p>Re-engage cold leads, confirm appointments and run campaigns — thousands of calls in parallel.</p>
-            <div class="big-num"><span data-count="2400" data-suffix="+">0</span><small>parallel calls</small></div>
-          </article>
-
-          <article class="tile reveal">
-            <span class="tile__tag">Integrations</span>
-            <h3>Lives in your stack</h3>
-            <p>Native sync with your CRM, calendar and helpdesk. Webhooks &amp; REST API for everything else.</p>
-            <div class="chips" aria-hidden="true">
-              <span>HubSpot</span><span>Salesforce</span><span>Pipedrive</span><span>Google Calendar</span><span>Outlook</span><span>Zendesk</span><span>Slack</span><span>Webhooks</span>
-            </div>
-          </article>
-
-          <article class="tile tile--wide tile--accent reveal">
-            <div class="tile__text">
-              <span class="tile__tag">Voices</span>
-              <h3>Sounds like your best employee</h3>
-              <p>Natural, warm voices in 39 languages — including regional German dialects. Clone your own brand voice in minutes.</p>
-            </div>
-            <div class="langs" aria-hidden="true">
-              <span>Deutsch</span><span>English</span><span>Français</span><span>Español</span><span>Italiano</span><span>Nederlands</span><span>Polski</span><span>Svenska</span><span>Türkçe</span><span>Português</span><span>Čeština</span><span>Dansk</span><span class="more">+27</span>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ HOW IT WORKS ============ -->
-    <section class="section section--tint" id="how">
-      <div class="container">
-        <header class="section__head reveal">
-          <span class="eyebrow">How it works</span>
-          <h2>Live in days, <em>not quarters.</em></h2>
-        </header>
-        <ol class="steps" id="steps">
-          <li class="step reveal">
-            <span class="step__n">01</span>
-            <h3>Connect your number</h3>
-            <p>Forward your existing line or get a new local number. SIP, Twilio and all major German carriers supported.</p>
-          </li>
-          <li class="step reveal">
-            <span class="step__n">02</span>
-            <h3>Train your agent</h3>
-            <p>Upload your website, FAQs and price lists. Define qualification questions and handover rules — no code required.</p>
-          </li>
-          <li class="step reveal">
-            <span class="step__n">03</span>
-            <h3>Watch the pipeline grow</h3>
-            <p>Every call becomes a scored lead, a summary and a data point. Track conversion, sentiment and revenue in real time.</p>
-          </li>
-          <span class="steps__line" aria-hidden="true"><span id="stepsFill"></span></span>
-        </ol>
-      </div>
-    </section>
-
-    <!-- ============ ANALYTICS DASHBOARD ============ -->
-    <section class="section section--dark" id="analytics">
-      <div class="container">
-        <header class="section__head section__head--light reveal">
-          <span class="eyebrow">Analytics</span>
-          <h2>Your phone line, <em>finally measurable.</em></h2>
-          <p>Every conversation is transcribed, scored and rolled into KPIs your whole team understands. No spreadsheets, no guesswork.</p>
-        </header>
-
-        <div class="dash reveal" id="dash">
+        <div class="dash reveal" id="bench">
           <div class="dash__bar">
             <div class="dash__title">
               <span class="dots"><i></i><i></i><i></i></span>
-              app.kugelaudio.com / analytics
+              <span id="benchTitle">kugel-ear-1 · speech to text</span>
             </div>
-            <div class="seg" role="tablist" aria-label="Period">
-              <button role="tab" data-range="7">7D</button>
-              <button role="tab" data-range="30" class="is-active">30D</button>
-              <button role="tab" data-range="90">90D</button>
-            </div>
-          </div>
-
-          <div class="kpis">
-            <div class="kpi"><span>Calls handled</span><b id="k-calls">0</b><em class="up" id="d-calls">+0%</em></div>
-            <div class="kpi"><span>Qualified leads</span><b id="k-leads">0</b><em class="up" id="d-leads">+0%</em></div>
-            <div class="kpi"><span>Lead conversion</span><b id="k-conv">0%</b><em class="up" id="d-conv">+0 pp</em></div>
-            <div class="kpi"><span>Pipeline value</span><b id="k-pipe">€0</b><em class="up" id="d-pipe">+0%</em></div>
-          </div>
-
-          <div class="dash__grid">
-            <div class="panel panel--chart">
-              <div class="panel__head">
-                <h4>Calls vs. qualified leads</h4>
-                <div class="legend"><span class="lg lg--calls">Calls</span><span class="lg lg--leads">Qualified</span></div>
-              </div>
-              <div class="chart" id="chart">
-                <svg id="chartSvg" preserveAspectRatio="none"></svg>
-                <div class="chart__tip" id="chartTip"></div>
-              </div>
-            </div>
-
-            <div class="panel">
-              <div class="panel__head"><h4>Conversion funnel</h4></div>
-              <div class="funnel" id="funnel"></div>
-            </div>
-
-            <div class="panel">
-              <div class="panel__head"><h4>Top caller intents</h4></div>
-              <div class="intents" id="intents"></div>
-            </div>
-
-            <div class="panel">
-              <div class="panel__head"><h4>Call quality</h4></div>
-              <div class="quality">
-                <div><span>Avg. handle time</span><b id="q-aht">2:41</b></div>
-                <div><span>Positive sentiment</span><b id="q-sent">91%</b></div>
-                <div><span>Resolved without human</span><b id="q-res">84%</b></div>
-                <div><span>Missed calls</span><b class="zero">0</b></div>
-              </div>
+            <div class="seg" role="tablist" aria-label="Benchmark">
+              <button role="tab" data-bench="stt" class="is-active" aria-selected="true">Speech to text</button>
+              <button role="tab" data-bench="tts" aria-selected="false">Text to speech</button>
+              <button role="tab" data-bench="lat" aria-selected="false">Latency</button>
             </div>
           </div>
+          <div class="bench" id="benchGrid" role="tabpanel"></div>
+          <div class="bench__tip" id="benchTip" role="status"></div>
         </div>
-        <p class="footnote">Illustrative dashboard with sample data.</p>
+        <p class="footnote" id="benchNote"></p>
       </div>
     </section>
 
     <!-- ============ USE CASES ============ -->
-    <section class="section" id="usecases">
+    <section class="section section--tight" id="usecases">
       <div class="container">
-        <header class="section__head reveal">
-          <span class="eyebrow">Use cases</span>
-          <h2>Built for teams <em>that live on the phone.</em></h2>
+        <header class="cases__head reveal">
+          <div class="arrows">
+            <button class="arrow-btn" id="casePrev" aria-label="Previous use case"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button class="arrow-btn" id="caseNext" aria-label="Next use case"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+          <div>
+            <h2>Built for voice agents that handle real calls.</h2>
+            <p class="cases__meta"><span>Languages</span> <b>39</b><i></i><span>First audio</span> <b>91 ms</b></p>
+          </div>
         </header>
-        <div class="cases reveal">
-          <div class="cases__tabs" role="tablist">
-            <button role="tab" class="is-active" data-case="0">Real estate</button>
-            <button role="tab" data-case="1">Automotive</button>
-            <button role="tab" data-case="2">Healthcare</button>
-            <button role="tab" data-case="3">B2B SaaS</button>
-          </div>
-          <div class="cases__panel" id="casePanel">
-            <div class="cases__copy">
-              <h3 id="caseTitle"></h3>
-              <p id="caseText"></p>
-              <ul id="caseList" class="checks"></ul>
-            </div>
-            <div class="cases__stat">
-              <b id="caseStat"></b>
-              <span id="caseStatLabel"></span>
-            </div>
-          </div>
-        </div>
+      </div>
+      <div class="cases" id="cases">
+        <article class="case case--amber">
+          <p class="case__quote"><strong>Appointments, read back right.</strong>Dates, times and street names spoken clearly, in your practice's own voice — with terms for professional secrecy holders (§ 203 StGB) on Enterprise.</p>
+          <div class="case__foot"><b>0%</b><span>words in the wrong accent · Kugel 3.5</span><small>Clinics &amp; practices</small></div>
+        </article>
+        <article class="case case--dusk">
+          <p class="case__quote"><strong>Digit-perfect IBANs and policy IDs.</strong>Long numbers and codes are read in the groups you wrote them, so callers can follow along and write them down.</p>
+          <div class="case__foot"><b>90.8%</b><span>numbers and codes read in their groups</span><small>Banking &amp; insurance</small></div>
+        </article>
+        <article class="case case--lake">
+          <p class="case__quote"><strong>Fewer “could you repeat that?”</strong>Kugel Ear 1 gets more words right on support calls than ElevenLabs, OpenAI, Speechmatics and Deepgram.</p>
+          <div class="case__foot"><b>93.4%</b><span>words right on support calls</span><small>Customer support</small></div>
+        </article>
+        <article class="case case--field">
+          <p class="case__quote"><strong>Names and addresses, written down right.</strong>When it isn't sure, Kugel Ear 1 says so and sends the spellings it heard — no more spelling loops.</p>
+          <div class="case__foot"><b>69.0%</b><span>written exactly right · next best 64.7%</span><small>Bookings &amp; CRM</small></div>
+        </article>
+        <article class="case case--clay">
+          <p class="case__quote"><strong>Callers on a construction site.</strong>Clarity 1 removes background noise and other voices in real time, so your agent answers when the caller stops talking.</p>
+          <div class="case__foot"><b>240 ms</b><span>streaming latency · Clarity 1</span><small>Field service &amp; logistics</small></div>
+        </article>
       </div>
     </section>
 
-    <!-- ============ ROI ============ -->
-    <section class="section section--tint" id="roi">
-      <div class="container roi">
-        <div class="roi__copy reveal">
-          <span class="eyebrow">ROI calculator</span>
-          <h2>What are missed calls <em>costing you?</em></h2>
-          <p>On average, businesses miss 1 in 4 inbound calls — and 85% of those callers never call back. Move the sliders to estimate the revenue KugelAudio can recover.</p>
-        </div>
-        <div class="roi__card reveal">
-          <label class="range">
-            <span>Inbound calls per month <b id="o-calls">1,200</b></span>
-            <input type="range" id="r-calls" min="100" max="10000" step="100" value="1200" />
-          </label>
-          <label class="range">
-            <span>Missed calls today <b id="o-miss">25%</b></span>
-            <input type="range" id="r-miss" min="5" max="60" step="1" value="25" />
-          </label>
-          <label class="range">
-            <span>Average deal value <b id="o-deal">€2,500</b></span>
-            <input type="range" id="r-deal" min="100" max="50000" step="100" value="2500" />
-          </label>
-          <label class="range">
-            <span>Lead-to-deal rate <b id="o-close">8%</b></span>
-            <input type="range" id="r-close" min="1" max="40" step="1" value="8" />
-          </label>
-          <div class="roi__result">
-            <span>Recovered revenue / year</span>
-            <b id="roiOut">€0</b>
-            <small id="roiSub"></small>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ SECURITY ============ -->
+    <!-- ============ SOVEREIGNTY ============ -->
     <section class="section" id="security">
       <div class="container">
-        <div class="trust reveal">
-          <div class="trust__mark">
-            <img src="assets/logos/logo-square-transparent.png" alt="" width="160" height="160" />
+        <header class="head head--split head--center reveal">
+          <h2>Built, trained and hosted in Europe.</h2>
+          <a href="https://www.kugelaudio.com/en/trust" class="btn btn--dark">Visit the Trust Center</a>
+        </header>
+        <ul class="badges reveal">
+          <li><img src="assets/logos/gdpr-badge.png" alt="" width="44" height="44" /><span>GDPR-compliant</span></li>
+          <li><svg viewBox="0 0 44 44" width="44" height="44" aria-hidden="true"><g fill="currentColor">
+            <circle cx="22" cy="6" r="1.8"/><circle cx="30" cy="8.2" r="1.8"/><circle cx="35.8" cy="14" r="1.8"/><circle cx="38" cy="22" r="1.8"/><circle cx="35.8" cy="30" r="1.8"/><circle cx="30" cy="35.8" r="1.8"/><circle cx="22" cy="38" r="1.8"/><circle cx="14" cy="35.8" r="1.8"/><circle cx="8.2" cy="30" r="1.8"/><circle cx="6" cy="22" r="1.8"/><circle cx="8.2" cy="14" r="1.8"/><circle cx="14" cy="8.2" r="1.8"/></g></svg><span>EU Sovereign Cloud</span></li>
+          <li><svg viewBox="0 0 44 44" width="44" height="44" aria-hidden="true"><rect x="8" y="10" width="28" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="8" y="25" width="28" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="14" cy="14.5" r="1.6" fill="currentColor"/><circle cx="14" cy="29.5" r="1.6" fill="currentColor"/></svg><span>On-premise option</span></li>
+          <li><svg viewBox="0 0 44 44" width="44" height="44" aria-hidden="true"><circle cx="22" cy="22" r="14" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 32L32 12" stroke="currentColor" stroke-width="2"/></svg><span>No training on your content</span></li>
+          <li><svg viewBox="0 0 44 44" width="44" height="44" aria-hidden="true"><path d="M12 6h14l8 8v24H12z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M26 6v8h8M17 22h12M17 27h12M17 32h8" fill="none" stroke="currentColor" stroke-width="2"/></svg><span>EU DPA</span></li>
+          <li><svg viewBox="0 0 44 44" width="44" height="44" aria-hidden="true"><path d="M22 5l14 5v10c0 9-6 16-14 19C14 36 8 29 8 20V10z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 22l4 4 8-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>§ 203 StGB terms</span></li>
+        </ul>
+        <p class="sov-note reveal">Sovereign Cloud means hosting by EU companies only: no provider with a US parent processes your audio, text or voice references. Included by default for EU/EEA customers.</p>
+      </div>
+    </section>
+
+    <!-- ============ COST CALCULATOR ============ -->
+    <section class="band" id="calculator">
+      <div class="container">
+        <div class="band__top reveal">
+          <h2>What will your voice agent cost?</h2>
+          <div>
+            <p>One price per audio minute, billed by the second. Pick a model, set your call volume and see your monthly bill — no seats, no platform fee.</p>
+            <div class="band__actions">
+              <a href="signup.html" class="btn btn--white">Get started free</a>
+              <a href="https://www.kugelaudio.com/en/pricing" class="btn btn--outline-light">Full pricing</a>
+            </div>
           </div>
-          <div class="trust__copy">
-            <span class="eyebrow">European by design</span>
-            <h2>Your data never <em>leaves the EU.</em></h2>
-            <p>KugelAudio GmbH develops and hosts its voice models in Germany. No US sub-processors in the audio path, full DPA, configurable retention and optional on-premise deployment.</p>
+        </div>
+
+        <div class="roi reveal">
+          <div class="roi__inputs">
+            <div class="range range--seg">
+              <span>Text-to-speech model</span>
+              <div class="seg seg--calc" role="radiogroup" aria-label="Text-to-speech model">
+                <button role="radio" data-model="kugel-3.5" data-rate="0.0525" class="is-active" aria-checked="true">kugel-3.5</button>
+                <button role="radio" data-model="kugel-3" data-rate="0.07" aria-checked="false">kugel-3</button>
+                <button role="radio" data-model="kugel-2-turbo" data-rate="0.035" aria-checked="false">Turbo</button>
+              </div>
+            </div>
+            <label class="range">
+              <span>Calls per month <b id="o-calls">2,500</b></span>
+              <input type="range" id="r-calls" min="100" max="50000" step="100" value="2500" />
+            </label>
+            <label class="range">
+              <span>Agent speech per call <b id="o-tts">2 min</b></span>
+              <input type="range" id="r-tts" min="0.5" max="10" step="0.5" value="2" />
+            </label>
+            <label class="range">
+              <span>Caller speech per call (Kugel Ear 1) <b id="o-stt">2 min</b></span>
+              <input type="range" id="r-stt" min="0" max="10" step="0.5" value="2" />
+            </label>
+            <label class="check check--form calc__clarity">
+              <input type="checkbox" id="r-clarity" />
+              <span>Add Clarity 1 — removes background noise and other voices from the caller's audio</span>
+            </label>
           </div>
-          <ul class="trust__list">
-            <li><img src="assets/logos/gdpr-badge.png" alt="" width="36" height="36" /><div><b>GDPR-compliant</b><small>DPA included on every plan</small></div></li>
-            <li><span class="ti">🇪🇺</span><div><b>EU-hosted</b><small>German data centers</small></div></li>
-            <li><span class="ti">⛨</span><div><b>Self-hosted option</b><small>Run in your own cloud</small></div></li>
-            <li><span class="ti">⌁</span><div><b>Encrypted</b><small>TLS 1.3 · AES-256 at rest</small></div></li>
-          </ul>
+          <div class="roi__result">
+            <span>Estimated cost per month</span>
+            <b id="calcOut">€0</b>
+            <small>excl. VAT, billed by the second</small>
+            <dl class="calc__lines" id="calcLines"></dl>
+          </div>
+        </div>
+
+        <div class="band__stats reveal">
+          <div><b>€5</b><span>free credit for every new account</span></div>
+          <div><b>70+ min</b><span>of audio with any model, no expiry</span></div>
+          <div><b>€0</b><span>credit card needed to start</span></div>
         </div>
       </div>
     </section>
 
     <!-- ============ PRICING ============ -->
-    <section class="section section--tint" id="pricing">
+    <section class="section" id="pricing">
       <div class="container">
-        <header class="section__head reveal">
-          <span class="eyebrow">Pricing</span>
-          <h2>Simple plans. <em>Pay for results.</em></h2>
-          <div class="billing" role="group" aria-label="Billing period">
-            <button class="is-active" data-bill="m">Monthly</button>
-            <button data-bill="y">Yearly <span class="save">−20%</span></button>
+        <header class="head head--split reveal">
+          <div>
+            <span class="eyebrow">Pricing</span>
+            <h2>One price per audio minute.</h2>
           </div>
+          <p>Text to Speech, Speech to Text and Clarity are billed by the second. Prices excl. VAT; EU Sovereign Cloud included on every plan.</p>
         </header>
 
         <div class="plans">
-          <article class="plan reveal">
-            <h3>Starter</h3>
-            <p class="plan__desc">For small teams that can't afford to miss a call.</p>
-            <div class="plan__price"><span class="cur">€</span><b data-m="290" data-y="232" data-current="290">290</b><span class="per">/ month</span></div>
-            <ul class="checks">
-              <li>500 call minutes included</li><li>1 AI agent · 1 phone number</li><li>Lead capture &amp; email summaries</li><li>Core KPI dashboard</li>
-            </ul>
-            <a href="#demo" class="btn btn--outline">Start free trial</a>
-          </article>
           <article class="plan plan--featured reveal">
-            <span class="plan__badge">Most popular</span>
-            <h3>Growth</h3>
-            <p class="plan__desc">For sales teams that run on qualified pipeline.</p>
-            <div class="plan__price"><span class="cur">€</span><b data-m="790" data-y="632" data-current="790">790</b><span class="per">/ month</span></div>
+            <span class="plan__badge">Default model</span>
+            <span class="module__id">kugel-3.5</span>
+            <h3>Text to Speech</h3>
+            <p class="plan__desc">The voice your agent speaks with — sharper on short replies, pauses and spelled-out codes.</p>
+            <div class="plan__price"><span class="cur">€</span><b>0.0525</b><span class="per">/ min generated</span></div>
             <ul class="checks">
-              <li>2,500 call minutes included</li><li>5 agents · inbound &amp; outbound</li><li>Lead scoring &amp; CRM sync</li><li>Advanced analytics &amp; exports</li><li>Calendar booking</li>
+              <li>Precise on numbers, e-mails and phone numbers</li><li>IPA notations &amp; dictionaries</li><li>Voice cloning</li><li>REST and WebSocket streaming</li><li>Word-level timestamps</li>
             </ul>
-            <a href="#demo" class="btn btn--primary">Book a demo →</a>
+            <p class="plan__note">Turbo (kugel-2-turbo) from €0.035 / min for high volumes.</p>
+            <a href="signup.html" class="btn btn--accent">Get started free</a>
           </article>
           <article class="plan reveal">
-            <h3>Enterprise</h3>
-            <p class="plan__desc">For contact centers and regulated industries.</p>
-            <div class="plan__price"><b class="custom">Custom</b></div>
+            <span class="module__id">kugel-ear-1</span>
+            <h3>Speech to Text</h3>
+            <p class="plan__desc">Writes down what callers say and flags the words it is unsure of.</p>
+            <div class="plan__price"><span class="cur">€</span><b>0.008</b><span class="per">/ min input</span></div>
             <ul class="checks">
-              <li>Unlimited agents &amp; volume</li><li>Custom voice cloning</li><li>Self-hosted / on-premise</li><li>SSO, audit logs, SLA</li><li>Dedicated success manager</li>
+              <li>Unsure words flagged, with alternatives</li><li>Waits out mid-sentence pauses</li><li>72 ms median to final transcript</li><li>Guaranteed EU hosting</li>
             </ul>
-            <a href="#demo" class="btn btn--outline">Talk to sales</a>
+            <a href="signup.html" class="btn btn--outline">Get started free</a>
           </article>
+          <article class="plan reveal">
+            <span class="module__id">clarity-1</span>
+            <h3>Clarity</h3>
+            <p class="plan__desc">Removes background noise and other voices from calls and recordings.</p>
+            <div class="plan__price"><span class="cur">€</span><b>0.0015</b><span class="per">/ min input</span></div>
+            <ul class="checks">
+              <li>Real-time noise removal</li><li>Caller isolation from a 2–8 s voice sample</li><li>240 ms streaming latency</li><li>Guaranteed EU hosting</li>
+            </ul>
+            <a href="signup.html" class="btn btn--outline">Get started free</a>
+          </article>
+        </div>
+
+        <div class="enterprise reveal">
+          <div>
+            <span class="module__id">Enterprise</span>
+            <h3>On-premise, SLAs and committed rates.</h3>
+          </div>
+          <ul class="checks checks--cols">
+            <li>On-premise hosting</li><li>Service level agreements</li><li>Custom DPA</li><li>§ 203 StGB terms</li>
+            <li>Dedicated account manager</li><li>24/7 support</li><li>Higher concurrency limits</li><li>Lower committed-use rates</li>
+          </ul>
+          <a href="https://www.kugelaudio.com/en#enterprise" class="btn btn--dark">Talk to us</a>
         </div>
       </div>
     </section>
 
     <!-- ============ FAQ ============ -->
-    <section class="section" id="faq">
+    <section class="section section--sand" id="faq">
       <div class="container faq">
-        <header class="section__head section__head--left reveal">
+        <header class="faq__head reveal">
           <span class="eyebrow">FAQ</span>
-          <h2>Questions, <em>answered.</em></h2>
-          <p>Can't find what you need? <a href="mailto:hello@kugelaudio.com">Write to us</a>.</p>
+          <h2>Questions, answered.</h2>
+          <p>Can't find what you need? Read the <a href="https://docs.kugelaudio.com/">documentation</a> or <a href="https://www.kugelaudio.com/en#enterprise">talk to us</a>.</p>
         </header>
         <div class="faq__list">
           <details class="reveal" open>
-            <summary>Will callers notice they're talking to an AI?</summary>
-            <p>Our voices are among the most natural in Europe, with sub-300ms latency and natural turn-taking. For transparency we recommend — and by default enable — a short disclosure at the start of each call.</p>
+            <summary>Which text-to-speech model should I use?</summary>
+            <p>Kugel 3.5 is the default: it gets short replies, IPA pronunciation, pauses and spelled-out codes right far more often than Kugel 3, at 75% of its price. Turbo (kugel-2-turbo) costs less for high volumes but has no IPA notations and is less precise on numbers and codes.</p>
           </details>
           <details class="reveal">
-            <summary>How does KugelAudio track leads and KPIs?</summary>
-            <p>Each call is transcribed and analyzed in real time. The agent extracts structured fields (contact, intent, budget, timeline), assigns a lead score and writes everything to your dashboard and CRM. KPIs like answer rate, conversion, handle time and sentiment update live.</p>
+            <summary>Does my data leave Europe?</summary>
+            <p>No. The models are built, trained and hosted in the EU. With the EU Sovereign Cloud — included on every plan for EU/EEA customers — hosting is done by EU companies only, and no provider with a US parent processes your audio, text or voice references.</p>
           </details>
           <details class="reveal">
-            <summary>What happens when a call needs a human?</summary>
-            <p>You define the handover rules — by intent, lead score, keyword or caller. The agent transfers warm, with a spoken summary to your colleague and the full transcript in their inbox.</p>
+            <summary>Do you train on my content?</summary>
+            <p>Never. Your audio, text and voice references are not used to train our models.</p>
           </details>
           <details class="reveal">
-            <summary>Is it really GDPR-compliant?</summary>
-            <p>Yes. KugelAudio GmbH is a German company. Models are developed and hosted in the EU, we sign a DPA with every customer, and retention periods are fully configurable. Self-hosting is available on Enterprise.</p>
+            <summary>Which frameworks do you support?</summary>
+            <p>Official plugins for LiveKit Agents and Pipecat, built-in endpoints for Vapi and Cognigy, and an MCP server for Claude and Cursor. SDKs for Python and TypeScript, plus REST and WebSocket streaming for any other pipeline.</p>
           </details>
           <details class="reveal">
-            <summary>How long does setup take?</summary>
-            <p>Most customers go live within 3–5 working days. Our team helps write the call flow, connect your number and integrate your CRM.</p>
+            <summary>Can I run the models on my own hardware?</summary>
+            <p>Yes, on Enterprise. The models run in your data centre, behind your firewall, with the same SDK and API as the hosted service — so your integration doesn't change.</p>
+          </details>
+          <details class="reveal">
+            <summary>How do I start?</summary>
+            <p>Sign up — every new account gets €5 of Text to Speech credit, at least 70 minutes of audio with any model. No credit card, no expiry.</p>
           </details>
         </div>
       </div>
@@ -469,34 +454,55 @@
 
     <!-- ============ CTA ============ -->
     <section class="cta" id="demo">
-      <canvas id="ctaWaves" class="cta__waves" aria-hidden="true"></canvas>
+      <div class="cta__media" aria-hidden="true"><img src="assets/img/hero-small.jpg" alt="" width="720" height="405" loading="lazy" /></div>
       <div class="container cta__inner reveal">
-        <h2>Hear it for yourself.<br /><em>Book a 20-minute demo.</em></h2>
-        <p>We'll build a custom agent for your business — before the call ends.</p>
-        <form class="cta__form" id="demoForm">
-          <input type="email" required placeholder="you@company.com" aria-label="Work email" />
-          <button class="btn btn--primary btn--lg" type="submit">Get my demo <span class="arrow">→</span></button>
-        </form>
-        <small class="cta__note" id="formNote">No credit card · Response within one business day</small>
+        <h2>Start building with €5 free credit.</h2>
+        <p>At least 70 minutes of audio with any model. No credit card, no expiry — and your data stays in Europe.</p>
+        <div class="cta__actions">
+          <a href="signup.html" class="btn btn--white">Get started free</a>
+          <a href="https://www.kugelaudio.com/en#enterprise" class="btn btn--outline-light">Talk to us</a>
+        </div>
       </div>
     </section>
   </main>
 
   <!-- ============ FOOTER ============ -->
   <footer class="footer">
-    <div class="container footer__grid">
-      <div class="footer__brand">
-        <img src="assets/logos/logo-banner-transparent-darkmode.png" alt="KugelAudio" width="2160" height="693" />
-        <p>European AI voice agents that answer, qualify and measure every business call.</p>
-        <span class="footer__made"><span class="flag" aria-hidden="true"></span> Made in Germany</span>
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <img class="footer__logo" src="assets/logos/logo-banner-transparent.png" alt="KugelAudio" width="2160" height="693" />
+          <p class="footer__tag">Production-ready voice AI, built and hosted in Europe.</p>
+          <p class="yc"><img src="assets/logos/yc.svg" alt="" width="18" height="18" /><span>Backed by <b>Y Combinator</b></span></p>
+        </div>
+        <div class="news">
+          <h2>Subscribe to our news.</h2>
+          <form class="news__form" id="newsForm" novalidate>
+            <input type="email" required placeholder="Business e-mail" aria-label="Business e-mail" />
+            <button class="btn btn--dark" type="submit">Subscribe to newsletter</button>
+          </form>
+          <label class="check">
+            <input type="checkbox" required />
+            <span>I am happy to receive KugelAudio's latest news &amp; updates on a regular basis. By submitting the form, you acknowledge our Privacy Policy. You can revoke this consent at any time.*</span>
+          </label>
+          <small class="news__note" id="newsNote" role="status"></small>
+        </div>
       </div>
-      <div><h5>Product</h5><a href="#product">Features</a><a href="#analytics">Analytics</a><a href="#pricing">Pricing</a><a href="#">API docs</a></div>
-      <div><h5>Company</h5><a href="#">About</a><a href="#">Careers</a><a href="#">Press</a><a href="mailto:hello@kugelaudio.com">Contact</a></div>
-      <div><h5>Legal</h5><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">AGB</a><a href="#">DPA</a></div>
-    </div>
-    <div class="container footer__base">
-      <span>© <span id="year"></span> KugelAudio GmbH. All rights reserved.</span>
-      <span class="footnote">*Illustrative figures for demonstration purposes.</span>
+
+      <div class="footer__cols">
+        <div><h5>Product</h5><a href="#models">Overview</a><a href="#pricing">Pricing</a><a href="https://www.kugelaudio.com/en/voices">Voices</a><a href="https://www.kugelaudio.com/en/integrations">Integrations</a><a href="https://www.kugelaudio.com/en/on-premise">On-premise</a><a href="https://www.kugelaudio.com/en/compare">Compare</a></div>
+        <div><h5>Resources</h5><a href="https://docs.kugelaudio.com/">Documentation</a><a href="https://docs.kugelaudio.com/changelog">Changelog</a><a href="https://www.kugelaudio.com/status">Status</a><a href="https://www.kugelaudio.com/en/articles">Articles</a></div>
+        <div><h5>Company</h5><a href="https://www.kugelaudio.com/en/careers">Careers</a><a href="https://www.kugelaudio.com/en/press">Press</a><a href="https://www.kugelaudio.com/en/trust">Trust Center</a></div>
+        <div><h5>Legal</h5><a href="https://www.kugelaudio.com/en/imprint">Imprint</a><a href="https://www.kugelaudio.com/en/privacy">Privacy</a><a href="https://www.kugelaudio.com/en/terms">Terms</a></div>
+      </div>
+
+      <div class="footer__base">
+        <div>
+          <span class="lang"><b>EN</b> / <span>DE</span></span>
+          <span>© <span id="year"></span> KugelAudio GmbH · Rosenthaler Str. 36, 10178 Berlin · Built in Germany.</span>
+        </div>
+        <div class="footer__social"><a href="#">LinkedIn</a><a href="#">X</a></div>
+      </div>
     </div>
   </footer>
 
