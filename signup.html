@@ -60,7 +60,7 @@
         <div class="proof" id="proof" aria-roledescription="carousel" aria-label="Why teams choose KugelAudio">
           <svg class="proof__mark" viewBox="0 0 18 14" aria-hidden="true"><path fill="currentColor" d="M0 14V8.4C0 3.9 2.2 1 6.6 0l.9 1.9C5.2 2.7 4 4.3 3.9 6.6H7.6V14zm10.4 0V8.4C10.4 3.9 12.6 1 17 0l.9 1.9c-2.3.8-3.5 2.4-3.6 4.7H18V14z"/></svg>
           <div class="proof__track" id="proofTrack">
-            <figure class="proof__item is-active"><p>No long forms. Just your name and phone number.</p><small>Sign-up</small></figure>
+            <figure class="proof__item is-active"><p>No long forms. Just your name, email and phone number.</p><small>Sign-up</small></figure>
             <figure class="proof__item"><p>Every new account starts with €5 of credit — at least 70 minutes of audio.</p><small>Free credit</small></figure>
             <figure class="proof__item"><p>First audio in 91 ms, the fastest streaming voice model we measured.</p><small>Kugel 3 · median latency</small></figure>
             <figure class="proof__item"><p>Built, trained and hosted in the EU. Never trained on your content.</p><small>Data sovereignty</small></figure>
@@ -95,6 +95,12 @@
             </div>
 
             <div class="field field--full">
+              <label for="email">Work email<span class="req">*</span></label>
+              <input class="input" id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="name@company.com" required />
+              <span class="field__err" aria-live="polite"></span>
+            </div>
+
+            <div class="field field--full">
               <label for="phone">Phone number<span class="req">*</span></label>
               <div class="phone">
                 <div class="cc" id="cc">
@@ -116,12 +122,21 @@
             </div>
 
             <div class="consents">
+              <!-- Terms and call permission are separate on purpose: consent to calls must not be bundled (GDPR Art. 7).
+                   Bump data-version whenever the wording changes; the backend stores the exact text each person saw. -->
               <label class="check check--form">
-                <input type="checkbox" name="consent" id="consent" required />
-                <span>I agree to KugelAudio's <a href="https://www.kugelaudio.com/en/terms">Terms of Service</a> and <a href="https://www.kugelaudio.com/en/privacy">Privacy Policy</a>.<span class="req">*</span></span>
+                <input type="checkbox" name="consent" id="consent" data-version="2026-10-31" required />
+                <span id="consentText">I agree to KugelAudio's <a href="https://www.kugelaudio.com/en/terms">Terms of Service</a> and have read the <a href="https://www.kugelaudio.com/en/privacy">Privacy Policy</a>.<span class="req">*</span></span>
               </label>
               <span class="field__err field__err--static" id="consentErr" aria-live="polite"></span>
+              <label class="check check--form">
+                <input type="checkbox" name="callConsent" id="callConsent" data-version="v1" />
+                <span id="callConsentText">Yes, KugelAudio may call me at the number above to talk about my use case. The call may be made by our AI voice assistant. I can withdraw this at any time.</span>
+              </label>
+              <p class="consents__note" id="dataNotice">To set up your account and prepare a possible call, we look up business information about you and your company from data providers, your company website and your IP address. Details and your right to object are in our <a href="https://www.kugelaudio.com/en/privacy">Privacy Policy</a>.</p>
             </div>
+
+            <p class="form__err" id="submitErr" role="alert" hidden></p>
 
             <div class="form__foot">
               <p>Already have an account? <a href="https://www.kugelaudio.com/en/signin">Log in</a></p>
@@ -133,7 +148,7 @@
         <div class="done" id="doneView" hidden tabindex="-1">
           <div class="done__icon"><svg viewBox="0 0 16 16" width="22" height="22" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <h2 id="doneTitle">You're in.</h2>
-          <p>Thanks for signing up. We've saved your details and your contact number <b id="donePhone"></b>. Your €5 of free credit is ready when you are.</p>
+          <p>Thanks for signing up. We've saved your details and your contact number <b id="donePhone"></b>.<span id="doneCall" hidden> Someone from our team may give you a call.</span> Your €5 of free credit is ready when you are.</p>
           <div class="done__actions">
             <a href="/" class="btn btn--dark">Back to homepage</a>
             <button class="btn btn--outline" type="button" id="editBtn">Edit my details</button>
