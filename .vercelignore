@@ -1,0 +1,7 @@
+# local scratch files, design references and tooling — not part of the site
+.context
+design
+.DS_Store
+.vercelignore
+.env*
+.vercel
