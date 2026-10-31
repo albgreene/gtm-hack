@@ -8,8 +8,8 @@ import os
 import sys
 from pathlib import Path
 
-# Vercel's filesystem is read-only except /tmp, and /tmp does not survive between
-# invocations: leads written here are not kept. Point LEADS_LOG at real storage to keep them.
+# Leads go to Supabase (SUPABASE_URL + SUPABASE_SECRET_KEY, set in the Vercel project).
+# Without those they fall back to /tmp, the only writable path on Vercel, which is not kept.
 os.environ.setdefault("LEADS_LOG", "/tmp/leads.jsonl")
 os.environ.setdefault("VISITOR_LOG", "/tmp/visitors.csv")
 

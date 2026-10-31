@@ -20,8 +20,9 @@ Usage
       python visitor_check.py --serve --port 5000
 
   This also serves the site at http://localhost:5000/ and receives the
-  sign-up form at POST /api/signup. Each sign-up is appended to leads.jsonl
-  with its consent record and the IP classification below.
+  sign-up form at POST /api/signup. Each sign-up is saved with its consent
+  record and the IP classification below: to the Supabase table `leads` when
+  SUPABASE_URL and SUPABASE_SECRET_KEY are set, otherwise to leads.jsonl.
 
   Then add this to your website (or call /track from your backend):
       <script>fetch("https://your-server.example.com/track?page=" + encodeURIComponent(location.pathname));</script>
@@ -40,6 +41,7 @@ import os
 import re
 import sys
 import time
+import urllib.error
 import urllib.request
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
@@ -48,6 +50,9 @@ from pathlib import Path
 IPINFO_TOKEN = os.environ.get("IPINFO_TOKEN", "")
 LOG_FILE = Path(os.environ.get("VISITOR_LOG", "visitors.csv"))
 LEADS_FILE = Path(os.environ.get("LEADS_LOG", "leads.jsonl"))
+# Server-side only: the secret key bypasses row-level security, so it must never reach the browser.
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "").rstrip("/")
+SUPABASE_SECRET_KEY = os.environ.get("SUPABASE_SECRET_KEY", "")
 SITE_DIR = Path(__file__).resolve().parent
 # Only these files are served by --serve; everything else in the repo (code, logs) stays private.
 SITE_FILES = {"index.html", "signup.html", "script.js", "signup.js", "styles.css"}
@@ -294,8 +299,38 @@ def validate_signup(data: dict) -> str | None:
     return None
 
 
+def insert_lead(record: dict) -> None:
+    """Insert one lead into the Supabase table `leads` (supabase/migrations)."""
+    row = {
+        "id": record["leadId"],
+        "submitted_at": record["submittedAt"],
+        "first_name": record["firstName"],
+        "last_name": record["lastName"],
+        "email": record["email"],
+        "phone": record["phone"],
+        "country": record["country"],
+        "locale": record["locale"],
+        "timezone": record["timezone"],
+        "tos": record["tos"],
+        "call_consent": record["callConsent"],
+        "data_notice": record["dataNotice"],
+        "user_agent": record["userAgent"],
+        "ip": record["ip"],
+    }
+    req = urllib.request.Request(
+        f"{SUPABASE_URL}/rest/v1/leads",
+        data=json.dumps(row, ensure_ascii=False).encode(),
+        method="POST",
+        headers={"apikey": SUPABASE_SECRET_KEY, "Content-Type": "application/json", "Prefer": "return=minimal"},
+    )
+    try:
+        urllib.request.urlopen(req, timeout=10).close()
+    except urllib.error.HTTPError as exc:
+        raise RuntimeError(f"Supabase insert failed: {exc.code} {exc.read().decode(errors='replace')[:300]}") from exc
+
+
 def save_lead(data: dict, ip_result: VisitorResult, user_agent: str = "") -> str:
-    """Append one lead with its consent record and IP classification to LEADS_FILE."""
+    """Save one lead with its consent record and IP classification to Supabase, else LEADS_FILE."""
     lead_id = os.urandom(8).hex()
     tos, call = data.get("tos") or {}, data.get("callConsent") or {}
     record = {
@@ -315,8 +350,11 @@ def save_lead(data: dict, ip_result: VisitorResult, user_agent: str = "") -> str
         "userAgent": user_agent,
         "ip": asdict(ip_result),
     }
-    with LEADS_FILE.open("a", encoding="utf-8") as f:
-        f.write(json.dumps(record, ensure_ascii=False) + "\n")
+    if SUPABASE_URL and SUPABASE_SECRET_KEY:
+        insert_lead(record)
+    else:
+        with LEADS_FILE.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(record, ensure_ascii=False) + "\n")
     return lead_id
 
 
@@ -365,7 +403,11 @@ def create_app():
             return jsonify(error=error), 400
         # The IP comes from the request itself, never from the form.
         result = classify(client_ip())
-        lead_id = save_lead(data, result, user_agent=request.headers.get("User-Agent", ""))
+        try:
+            lead_id = save_lead(data, result, user_agent=request.headers.get("User-Agent", ""))
+        except Exception as exc:  # Supabase down, bad key, disk full, ...
+            print(f"signup\tsave failed\t{exc}", flush=True)
+            return jsonify(error="We couldn't save your sign-up. Please try again."), 502
         print(f"signup\t{lead_id}\t{format_result(result)}", flush=True)
         return jsonify(leadId=lead_id), 202
 
