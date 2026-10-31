@@ -30,3 +30,9 @@ USER_AGENT = "Mozilla/5.0 (compatible; KugelAudio-enrichment/1.0; +https://kugel
 
 def env(name: str, default: str = "") -> str:
     return os.environ.get(name, default).strip()
+
+
+def firecrawl_headers() -> dict:
+    """Firecrawl answers without a key up to a small daily limit; FIRECRAWL_API_KEY raises it."""
+    key = env("FIRECRAWL_API_KEY")
+    return {"Authorization": f"Bearer {key}"} if key else {}

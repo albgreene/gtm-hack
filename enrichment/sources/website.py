@@ -1,8 +1,8 @@
 """The company's own website: homepage, subprocessor/DPA and product pages, and a few voice-related posts.
 
 Vendor logos often only show up as image alt text or file names (telli's ElevenLabs logo), so each page's
-text ends with one line per image and script. Uses Firecrawl when FIRECRAWL_API_KEY is set (renders
-JavaScript), otherwise a plain HTTP fetch.
+text ends with one line per image and script. Fetches through Firecrawl (renders JavaScript; keyless unless
+FIRECRAWL_API_KEY is set) and falls back to a plain HTTP fetch for any page Firecrawl fails on.
 """
 
 from __future__ import annotations
@@ -13,7 +13,7 @@ from html.parser import HTMLParser
 from urllib.parse import urldefrag, urljoin, urlparse
 
 from .. import doc, net, source_result
-from ..config import FIRECRAWL_URL, env
+from ..config import FIRECRAWL_URL, env, firecrawl_headers
 from ..techstack import VENDOR_WORDS
 
 MAX_PAGE_CHARS = 12000
@@ -144,7 +144,7 @@ def choose_pages(home_url: str, links: list[str]) -> list[str]:
 def _fetch_firecrawl(url: str) -> dict:
     reply = net.post_json(f"{FIRECRAWL_URL}/scrape", {"url": url, "formats": ["markdown", "rawHtml", "links"],
                                                        "onlyMainContent": False, "timeout": 30000},
-                          {"Authorization": f"Bearer {env('FIRECRAWL_API_KEY')}"}, timeout=45)
+                          firecrawl_headers(), timeout=45)
     data = (reply or {}).get("data") or {}
     final = (data.get("metadata") or {}).get("url") or (data.get("metadata") or {}).get("sourceURL") or url
     page = parse_html(final, data.get("rawHtml") or "")
@@ -178,8 +178,16 @@ def _sitemap_links(home_url: str) -> list[str]:
 
 
 def scrape(domain: str) -> dict:
-    fetch = _fetch_firecrawl if env("FIRECRAWL_API_KEY") else _fetch_plain
-    how = "firecrawl" if fetch is _fetch_firecrawl else "plain HTTP (no FIRECRAWL_API_KEY)"
+    plain = []
+
+    def fetch(url):
+        try:
+            return _fetch_firecrawl(url)
+        except Exception:
+            plain.append(url)
+            return _fetch_plain(url)
+
+    how = "firecrawl" if env("FIRECRAWL_API_KEY") else "firecrawl (keyless)"
     home, errors = None, []
     for candidate in (f"https://{domain}", f"https://www.{domain}"):
         try:
@@ -203,7 +211,8 @@ def scrape(domain: str) -> dict:
                 docs.append(doc(result["url"], "website", result["text"], result["title"]))
             else:
                 failed.append(url)
-    note = f"{how}; {len(docs)} page(s)" + (f"; failed: {', '.join(failed)[:300]}" if failed else "")
+    note = (f"{how}; {len(docs)} page(s)" + (f"; {len(plain)} via plain HTTP" if plain else "")
+            + (f"; failed: {', '.join(failed)[:300]}" if failed else ""))
     result = "ok" if any(len(d["text"]) > 200 for d in docs) else "empty"
     return source_result(f"website:{domain}", result, note, docs=docs,
                          data={"site_name": home["title"], "home_url": home["url"], "pages": [d["url"] for d in docs],

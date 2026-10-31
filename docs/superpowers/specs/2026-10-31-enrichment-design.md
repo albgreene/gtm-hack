@@ -278,7 +278,7 @@ before the qualifier sees them.
 | `NEEDLE_API_KEY` | Hermes VPS `.env` |
 | `OPENROUTER_API_KEY` | Hermes VPS `.env` |
 | `AIARK_API_TOKEN` | the `token=` parameter of the ai-ark MCP URL in `~/.claude.json` |
-| `FIRECRAWL_API_KEY` | **missing: Alberto provides one** |
+| `FIRECRAWL_API_KEY` | optional: Firecrawl runs keyless up to a small daily limit; a key raises it |
 | `QUALIFY_LEAD_SECRET` | `stuttgart/.context/qualify-lead.secret` |
 | `ENRICH_WEBHOOK_SECRET` | new; also stored in Supabase (Vault) for the webhook |
 

@@ -1,13 +1,13 @@
 """Search voice vendors' own sites for the company: case studies and customer pages.
 
 This is how telli's Cartesia contract was found: it's on cartesia.ai/customers/telli, not on telli.com.
-Needs FIRECRAWL_API_KEY (Firecrawl search); without it the source is recorded as skipped.
+Uses Firecrawl search (keyless unless FIRECRAWL_API_KEY is set).
 """
 
 from __future__ import annotations
 
 from .. import doc, net, source_result
-from ..config import FIRECRAWL_URL, env
+from ..config import FIRECRAWL_URL, firecrawl_headers
 from ..matching import company_matches
 
 VENDOR_SITES = ["elevenlabs.io", "cartesia.ai", "deepgram.com", "vapi.ai", "retellai.com", "livekit.io",
@@ -16,9 +16,7 @@ VENDOR_SITES = ["elevenlabs.io", "cartesia.ai", "deepgram.com", "vapi.ai", "rete
 
 
 def search(company_name: str | None, domain: str | None) -> dict:
-    if not env("FIRECRAWL_API_KEY"):
-        return source_result("vendor_search", "skipped", "no FIRECRAWL_API_KEY")
-    name = (company_name or (domain or "").split(".")[0]).strip()
+    name =(company_name or (domain or "").split(".")[0]).strip()
     if len(name) < 3:
         return source_result("vendor_search", "skipped", "no company name to search for")
 
@@ -27,7 +25,7 @@ def search(company_name: str | None, domain: str | None) -> dict:
         reply = net.post_json(f"{FIRECRAWL_URL}/search",
                               {"query": query, "limit": 6,
                                "scrapeOptions": {"formats": ["markdown"], "onlyMainContent": True}},
-                              {"Authorization": f"Bearer {env('FIRECRAWL_API_KEY')}"}, timeout=60)
+                              firecrawl_headers(), timeout=60)
     except (net.HTTPError, OSError) as exc:
         return source_result("vendor_search", "error", str(exc)[:200])
 
