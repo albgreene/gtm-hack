@@ -6,3 +6,8 @@ design
 .env*
 .vercel
 supabase
+.venv
+.pytest_cache
+tests
+scripts
+docs

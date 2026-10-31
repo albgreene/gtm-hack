@@ -5,3 +5,4 @@ visitors.csv
 leads.jsonl
 __pycache__/
 .venv/
+.pytest_cache/
