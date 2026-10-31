@@ -1,6 +1,7 @@
 /* =========================================================
    KugelAudio GmbH — Sign-up page
-   Name + phone only.
+   Name, email + phone. Posts to the Flask backend in checkip.py,
+   which adds the visitor's IP classification server-side.
    ========================================================= */
 (() => {
   "use strict";
@@ -234,6 +235,10 @@
   const form = $("#signupForm");
   const phoneField = () => phone.closest(".field");
   const consent = $("#consent");
+  const callConsent = $("#callConsent");
+  const email = form.elements.email;
+  // Override with <body data-api="https://…/api/signup"> when the site and backend live on different hosts.
+  const API_URL = document.body.dataset.api || "/api/signup";
 
   function setError(input, msg) {
     const field = input.closest(".field");
@@ -246,6 +251,10 @@
     const label = input.name === "firstName" ? "first name" : "last name";
     const v = input.value.trim();
     return setError(input, !v ? `Please enter your ${label}.` : !/\p{L}/u.test(v) ? `Please enter a valid ${label}.` : "");
+  }
+  function validateEmail() {
+    const v = email.value.trim();
+    return setError(email, !v ? "Please enter your email." : !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? "Please enter a valid email, e.g. name@company.com." : "");
   }
   function validatePhone() {
     const raw = phone.value.trim();
@@ -271,35 +280,64 @@
     input.addEventListener("blur", () => { if (input.value) validateName(input); });
     input.addEventListener("input", () => { if (input.closest(".field").classList.contains("has-error")) validateName(input); });
   });
+  email.addEventListener("blur", () => { if (email.value) validateEmail(); });
+  email.addEventListener("input", () => { if (email.closest(".field").classList.contains("has-error")) validateEmail(); });
   phone.addEventListener("blur", () => { if (phone.value) validatePhone(); });
   phone.addEventListener("input", () => { if (phoneField().classList.contains("has-error")) validatePhone(); });
   consent.addEventListener("change", () => { if ($("#consentErr").textContent) validateConsent(); });
 
-  form.addEventListener("submit", (e) => {
+  // The exact wording shown, so the backend can prove what each person agreed to.
+  const shownText = (el) => el.textContent.replace(/\*$/, "").replace(/\s+/g, " ").trim();
+
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     absorbInternational();
     const first = form.elements.firstName, last = form.elements.lastName;
-    const checks = [[first, validateName(first)], [last, validateName(last)], [phone, validatePhone()], [consent, validateConsent()]];
+    const checks = [[first, validateName(first)], [last, validateName(last)], [email, validateEmail()], [phone, validatePhone()], [consent, validateConsent()]];
     const bad = checks.find(([, ok]) => !ok);
     if (bad) { bad[0].focus(); return; }
 
-    // Hand-off point for the backend:
-    // { firstName, lastName, phone: e164(), country: current.iso, consent: true }
-    form.dataset.phoneE164 = e164();
+    // IP and timestamp are added by the server; never trust the browser for those.
+    const payload = {
+      firstName: first.value.trim(),
+      lastName: last.value.trim(),
+      email: email.value.trim().toLowerCase(),
+      phone: e164(),
+      country: current.iso,
+      tos: { accepted: true, version: consent.dataset.version, text: shownText($("#consentText")) },
+      callConsent: { given: callConsent.checked, version: callConsent.dataset.version, text: shownText($("#callConsentText")) },
+      dataNotice: shownText($("#dataNotice")),
+      locale: navigator.language || "",
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "",
+    };
 
     const btn = $("#submitBtn");
+    const err = $("#submitErr");
+    err.hidden = true;
     btn.classList.add("is-loading");
     btn.textContent = "Signing you up";
-    setTimeout(() => {
-      btn.classList.remove("is-loading");
-      btn.textContent = "Get started";
-      $("#doneTitle").textContent = `You're in, ${first.value.trim()}.`;
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(body.error || "Something went wrong. Please try again.");
+      $("#doneTitle").textContent = `You're in, ${payload.firstName}.`;
       $("#donePhone").textContent = pretty();
+      $("#doneCall").hidden = !payload.callConsent.given;
       $("#formView").hidden = true;
       const done = $("#doneView");
       done.hidden = false;
       done.focus({ preventScroll: true });
-    }, reduceMotion ? 0 : 1000);
+    } catch (ex) {
+      err.textContent = ex instanceof TypeError ? "We couldn't reach our server. Please try again." : ex.message;
+      err.hidden = false;
+    } finally {
+      btn.classList.remove("is-loading");
+      btn.textContent = "Get started";
+    }
   });
 
   $("#editBtn").addEventListener("click", () => {

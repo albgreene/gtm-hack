@@ -1,1 +1,5 @@
 .DS_Store
+visitors.csv
+leads.jsonl
+__pycache__/
+.venv/

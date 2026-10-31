@@ -19,6 +19,10 @@ Usage
       pip install flask
       python visitor_check.py --serve --port 5000
 
+  This also serves the site at http://localhost:5000/ and receives the
+  sign-up form at POST /api/signup. Each sign-up is appended to leads.jsonl
+  with its consent record and the IP classification below.
+
   Then add this to your website (or call /track from your backend):
       <script>fetch("https://your-server.example.com/track?page=" + encodeURIComponent(location.pathname));</script>
 
@@ -43,6 +47,10 @@ from pathlib import Path
 
 IPINFO_TOKEN = os.environ.get("IPINFO_TOKEN", "")
 LOG_FILE = Path(os.environ.get("VISITOR_LOG", "visitors.csv"))
+LEADS_FILE = Path(os.environ.get("LEADS_LOG", "leads.jsonl"))
+SITE_DIR = Path(__file__).resolve().parent
+# Only these files are served by --serve; everything else in the repo (code, logs) stays private.
+SITE_FILES = {"index.html", "signup.html", "script.js", "signup.js", "styles.css"}
 CACHE_TTL = 24 * 3600  # seconds
 
 # Names of ISPs that mostly serve households / mobile users.
@@ -268,6 +276,50 @@ def log_visit(result: VisitorResult, page: str = "", user_agent: str = "") -> No
         ])
 
 
+EMAIL_RE = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]{2,}$")
+E164_RE = re.compile(r"^\+[1-9]\d{6,14}$")
+
+
+def validate_signup(data: dict) -> str | None:
+    """Return an error message, or None if the sign-up payload is usable."""
+    for key in ("firstName", "lastName", "email", "phone"):
+        if not isinstance(data.get(key), str) or not data[key].strip():
+            return f"missing {key}"
+    if not EMAIL_RE.match(data["email"]):
+        return "invalid email"
+    if not E164_RE.match(data["phone"]):
+        return "invalid phone number"
+    if not (data.get("tos") or {}).get("accepted"):
+        return "terms of service must be accepted"
+    return None
+
+
+def save_lead(data: dict, ip_result: VisitorResult, user_agent: str = "") -> str:
+    """Append one lead with its consent record and IP classification to LEADS_FILE."""
+    lead_id = os.urandom(8).hex()
+    tos, call = data.get("tos") or {}, data.get("callConsent") or {}
+    record = {
+        "leadId": lead_id,
+        "submittedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "firstName": data["firstName"].strip(),
+        "lastName": data["lastName"].strip(),
+        "email": data["email"].strip().lower(),
+        "phone": data["phone"],
+        "country": data.get("country"),
+        "locale": data.get("locale"),
+        "timezone": data.get("timezone"),
+        # Proof of consent: exactly what was shown and agreed to, and when.
+        "tos": {"accepted": True, "version": tos.get("version"), "text": tos.get("text")},
+        "callConsent": {"given": bool(call.get("given")), "version": call.get("version"), "text": call.get("text")},
+        "dataNotice": data.get("dataNotice"),
+        "userAgent": user_agent,
+        "ip": asdict(ip_result),
+    }
+    with LEADS_FILE.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(record, ensure_ascii=False) + "\n")
+    return lead_id
+
+
 def format_result(result: VisitorResult) -> str:
     status = "lead" if result.is_potential_customer else "nolead"
     return f"{status}\t{result.signal}\t{result.ip}\t{result.company or '-'}"
@@ -278,9 +330,9 @@ def format_result(result: VisitorResult) -> str:
 # --------------------------------------------------------------------------- #
 
 def create_app():
-    from flask import Flask, jsonify, request
+    from flask import Flask, abort, jsonify, request, send_from_directory
 
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder=None)
     trust_proxy = os.environ.get("TRUSTED_PROXY", "1") == "1"
 
     def client_ip() -> str:
@@ -298,7 +350,33 @@ def create_app():
     @app.after_request
     def cors(resp):
         resp.headers["Access-Control-Allow-Origin"] = os.environ.get("ALLOWED_ORIGIN", "*")
+        resp.headers["Access-Control-Allow-Headers"] = "Content-Type"
         return resp
+
+    @app.route("/api/signup", methods=["POST", "OPTIONS"])
+    def signup():
+        if request.method == "OPTIONS":  # CORS preflight when the site is on another host
+            return "", 204
+        data = request.get_json(silent=True)
+        if not isinstance(data, dict):
+            return jsonify(error="expected a JSON body"), 400
+        error = validate_signup(data)
+        if error:
+            return jsonify(error=error), 400
+        # The IP comes from the request itself, never from the form.
+        result = classify(client_ip())
+        lead_id = save_lead(data, result, user_agent=request.headers.get("User-Agent", ""))
+        print(f"signup\t{lead_id}\t{format_result(result)}", flush=True)
+        return jsonify(leadId=lead_id), 202
+
+    @app.route("/")
+    @app.route("/<path:path>")
+    def site(path="index.html"):
+        if path in SITE_FILES:
+            return send_from_directory(SITE_DIR, path)
+        if path.startswith("assets/"):  # rooted at assets/ so "assets/../x" can't escape it
+            return send_from_directory(SITE_DIR / "assets", path.removeprefix("assets/"))
+        abort(404)
 
     @app.route("/track")
     def track():

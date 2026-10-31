@@ -769,6 +769,9 @@ p { margin: 0; }
 .check--form a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
 .check--form input { width: 20px; height: 20px; background: #fff; border-color: #bdb5aa; }
 .check--form.has-error input { border-color: #e2533b; }
+.consents__note { font-size: 12px; line-height: 1.5; color: var(--muted); }
+.consents__note a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 2px; }
+.form__err { grid-column: 1 / -1; font-size: 13px; color: #c9401f; }
 .form__foot { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 8px; }
 .form__foot p { font-size: 14px; color: var(--muted); }
 .form__foot p a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
