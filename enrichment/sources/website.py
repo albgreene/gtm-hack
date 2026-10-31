@@ -192,6 +192,10 @@ def scrape(domain: str) -> dict:
 
     links = home["links"] + _sitemap_links(home["url"])
     pages = choose_pages(home["url"], links)
+    root = _site_root(urlparse(home["url"]).netloc)
+    locales = sorted({m.group(1).lower()[:2] for link in links
+                      if _site_root(urlparse(urljoin(home["url"], link)).netloc) == root
+                      for m in [LOCALE_PREFIX.match(urlparse(urljoin(home["url"], link)).path)] if m})
     docs, failed = [doc(home["url"], "website", home["text"], home["title"])], []
     with ThreadPoolExecutor(max_workers=5) as pool:
         for url, result in zip(pages, pool.map(lambda u: _safe(fetch, u), pages)):
@@ -202,7 +206,8 @@ def scrape(domain: str) -> dict:
     note = f"{how}; {len(docs)} page(s)" + (f"; failed: {', '.join(failed)[:300]}" if failed else "")
     result = "ok" if any(len(d["text"]) > 200 for d in docs) else "empty"
     return source_result(f"website:{domain}", result, note, docs=docs,
-                         data={"site_name": home["title"], "home_url": home["url"], "pages": [d["url"] for d in docs]})
+                         data={"site_name": home["title"], "home_url": home["url"], "pages": [d["url"] for d in docs],
+                               "site_locales": locales})
 
 
 def _safe(fetch, url):

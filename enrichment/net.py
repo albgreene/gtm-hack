@@ -8,6 +8,8 @@ import urllib.request
 
 from .config import USER_AGENT
 
+API_AGENT = "kugelaudio-enrichment/1.0"  # not browser-like: Supabase refuses secret keys from browsers
+
 
 class HTTPError(RuntimeError):
     def __init__(self, status: int, body: str):
@@ -20,7 +22,7 @@ class ToolError(RuntimeError):
 
 
 def _request(url: str, data: bytes | None, headers: dict, method: str, timeout: float):
-    req = urllib.request.Request(url, data=data, headers={"User-Agent": USER_AGENT, **headers}, method=method)
+    req = urllib.request.Request(url, data=data, headers={"User-Agent": API_AGENT, **headers}, method=method)
     try:
         return urllib.request.urlopen(req, timeout=timeout)
     except urllib.error.HTTPError as exc:
@@ -42,7 +44,8 @@ def post_json(url: str, body, headers: dict | None = None, timeout: float = 30, 
 
 def get_text(url: str, timeout: float = 15, max_bytes: int = 3_000_000) -> tuple[str, str]:
     """Fetch a page; returns (final URL after redirects, decoded body)."""
-    hdrs = {"Accept": "text/html,application/xhtml+xml;q=0.9,*/*;q=0.5", "Accept-Language": "en,de;q=0.8"}
+    hdrs = {"Accept": "text/html,application/xhtml+xml;q=0.9,*/*;q=0.5", "Accept-Language": "en,de;q=0.8",
+            "User-Agent": USER_AGENT}
     with _request(url, None, hdrs, "GET", timeout) as resp:
         charset = resp.headers.get_content_charset() or "utf-8"
         return resp.geturl(), resp.read(max_bytes).decode(charset, errors="replace")
