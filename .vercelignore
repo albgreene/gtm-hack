@@ -5,3 +5,4 @@ design
 .vercelignore
 .env*
 .vercel
+supabase
